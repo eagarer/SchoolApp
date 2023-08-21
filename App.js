@@ -1,5 +1,23 @@
 import React from 'react';
 import {SafeAreaView, StyleSheet, TextInput, Button, Alert} from 'react-native';
+import axios from 'axios';
+
+const callApi = async () => {
+  const config = {
+    method: 'get',
+    url: 'https://jsonplaceholder.typicode.com/posts/1',
+    // headers: { 'Authorization': 'Bearer YOUR_ACCESS_TOKEN' }
+  };
+
+  try {
+    const response = await axios(config);
+    const data = response.data;
+    console.log(data);
+    Alert.alert(data.title);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
 
 const UselessTextInput = () => {
   const [username, onChangeUsername] = React.useState('');
@@ -20,13 +38,7 @@ const UselessTextInput = () => {
         placeholder="password"
         secureTextEntry={true}
       />
-      <Button
-        title="Log in"
-        color="#f194ff"
-        onPress={() =>
-          Alert.alert('Successfull' + ' ' + username + ' ' + password)
-        }
-      />
+      <Button title="Log in" color="#f194ff" onPress={callApi} />
     </SafeAreaView>
   );
 };
